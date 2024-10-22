@@ -68,25 +68,27 @@ def insert_line_breaks(text):
     return ''.join(neu)
 
 
-def process_file(conllu_file, txt_file):
-    with open(conllu_file, "rt", encoding="utf-8") as conllu, open(txt_file, "wt", encoding="utf-8") as txt:
+def process_file(conllu_file, out_file):
+    with open(conllu_file, "rt", encoding="utf-8") as conllu, open(out_file, "wt", encoding="utf-8") as out:
         i = 0
         for line in conllu:
-            line = line.strip()
             if line.startswith("# text = "):
+                line = line.strip()
                 text = line[9:]
                 text = detokenize(text)
-                text = insert_line_breaks(text)
-                txt.write(text)
+                #text = insert_line_breaks(text)
+                out.write("# text = "+text+"\n")
                 i += 1
+            else:
+                out.write(line)
     print("\t"+str(i)+" Sätze.")
 
 
 if __name__ == "__main__":
     conllu_dir = sys.argv[1]
+    out_dir = sys.argv[2]
     files = os.listdir(conllu_dir)
     for file in files:
         if file.endswith(".conllu"):
-            neu = file[:-6] + "txt"
-            print(file+" -> "+neu)
-            process_file(conllu_dir+"/"+file, conllu_dir+"/"+neu)
+            print(file+" -> "+out_dir+"/"+file)
+            process_file(conllu_dir+"/"+file, out_dir+"/"+file)
