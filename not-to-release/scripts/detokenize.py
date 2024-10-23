@@ -86,9 +86,9 @@ def handle_line(line, text, pieces, start, idx, sent):
         try:
             if text[t+len(pieces[1])] != " ":
                 if pieces[-1] == "_":
-                    pieces[-1] = "SpaceAfter=no"
+                    pieces[-1] = "SpaceAfter=No"
                 else:
-                    pieces[-1] += "|SpaceAfter=no"
+                    pieces[-1] += "|SpaceAfter=No"
         except IndexError as err:
             print(f"t={t}, start={start}, idx={idx}, pieces[1]={pieces[1]}, len(sent)={len(sent)}")
             print(f"len(text)={len(text)}, len(pieces[1])={len(pieces[1])}")
